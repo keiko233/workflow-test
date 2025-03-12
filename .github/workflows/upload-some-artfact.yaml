@@ -1,0 +1,22 @@
+on:
+  workflow_dispatch:
+
+jobs:
+  upload:
+    strategy:
+      matrix:
+        include:
+          - arch: "aarch64"
+          - arch: "x86_64"
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-${{ matrix.arch }}
+          path: |
+            target/**/*
